@@ -10,14 +10,14 @@ export const register = async (req, res) => {
 
   try {
     if (name.length > 20 || name.length < 2)
-      return res.status(401).json({
+      return res.status(400).json({
         message: `Name must be not lower than 2 character and must be not greater than 20`,
       });
     if (!validator.isEmail(email))
-      return res.status(401).json({ message: `Invalid Email format` });
+      return res.status(400).json({ message: `Invalid Email format` });
 
     if (!regexPassword.test(password))
-      return res.status(401).json({
+      return res.status(400).json({
         message: `Password must be 8 character must have number, special Character and capital letter`,
       });
 
@@ -33,7 +33,7 @@ export const register = async (req, res) => {
       .json({ ok: true, message: `Account Register Successfully` });
   } catch (error) {
     res
-      .status(401)
+      .status(400)
       .json({ ok: false, message: `Failed to register user ${error}` });
   }
 };

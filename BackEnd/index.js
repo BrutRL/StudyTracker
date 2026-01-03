@@ -5,11 +5,18 @@ import subjectRoutes from "./Routes/SubjectController.js";
 import studySessionRoutes from "./Routes/StudySession.js";
 import multer from "multer";
 import cookieParser from "cookie-parser";
-
+import cors from "cors";
 const app = express();
 const PORT = 3000;
 const upload = multer();
 await DbConnection();
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(upload.array());
