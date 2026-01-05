@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import Sidebar from "./Pages/sidebar";
 import ProctectedRoutes from "./Auth/protectedRoutes";
 function App() {
+  // branch
   return (
     <BrowserRouter>
       <Toaster position="top-center" richColors />

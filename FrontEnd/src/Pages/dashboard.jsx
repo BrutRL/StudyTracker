@@ -1,4 +1,3 @@
-import 
 function Dashboard() {
   return (
     <main className="">
