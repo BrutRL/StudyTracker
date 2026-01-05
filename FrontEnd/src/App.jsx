@@ -3,6 +3,8 @@ import Login from "./Auth/login";
 import Register from "./Auth/register";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
+import Sidebar from "./Pages/sidebar";
+import ProctectedRoutes from "./Auth/protectedRoutes";
 function App() {
   return (
     <BrowserRouter>
@@ -11,6 +13,14 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProctectedRoutes>
+              <Sidebar />
+            </ProctectedRoutes>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

@@ -2,11 +2,12 @@ import { FiBookOpen } from "react-icons/fi";
 import { FaEyeSlash } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import { useCallback, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 function Login() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -18,6 +19,7 @@ function Login() {
     onSuccess: (response) => {
       if (response.ok) {
         toast.success(response.message);
+        navigate("/dashboard");
       } else {
         toast.error(response.message);
       }
