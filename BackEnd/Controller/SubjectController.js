@@ -10,6 +10,18 @@ export const all = async (req, res) => {
       .json({ ok: false, message: `Failed to get all subject ${error}` });
   }
 };
+
+export const count = async (req, res) => {
+  try {
+    const data = await Subject.find({ userId: req.userId });
+    res.status(200).json({ ok: true, data: data.length });
+  } catch (error) {
+    res.status(401).json({
+      ok: false,
+      message: `Failed to get study session data ${error}`,
+    });
+  }
+};
 export const create = async (req, res) => {
   const { name, description } = req.body;
   try {

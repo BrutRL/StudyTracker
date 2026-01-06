@@ -12,6 +12,18 @@ export const all = async (req, res) => {
   }
 };
 
+export const count = async (req, res) => {
+  try {
+    const data = await StudySession.find({ userId: req.userId });
+    res.status(200).json({ ok: true, data: data.length });
+  } catch (error) {
+    res.status(401).json({
+      ok: false,
+      message: `Failed to get study session data ${error}`,
+    });
+  }
+};
+
 export const create = async (req, res) => {
   const { subjectId, duration, notes, date } = req.body;
   try {

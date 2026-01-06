@@ -12,7 +12,9 @@ function ProctectedRoutes({ children }) {
   if (isLoading) {
     return (
       <main className="bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-1000 flex p-5 justify-center items-center h-screen">
-        <h1 className="text-4xl font-semibold">Checking your credentials</h1>
+        <h1 className="text-4xl font-semibold text-center">
+          Checking your credentials
+        </h1>
       </main>
     );
   }

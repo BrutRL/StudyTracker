@@ -68,7 +68,7 @@ function Sidebar() {
           ))}
         </ul>
       </aside>
-      <main className="ml-5 p-6">{component[active]}</main>
+      <main className="ml-5 p-6 ">{component[active]}</main>
     </main>
   );
 }
