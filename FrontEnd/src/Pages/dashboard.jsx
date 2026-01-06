@@ -11,6 +11,7 @@ import { formatMinutes } from "../utils/hoursFormatter";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FiBookOpen } from "react-icons/fi";
 import { FiTarget } from "react-icons/fi";
+import { useMutation } from "@tanstack/react-query";
 function Dashboard() {
   const { data: userData, isSuccess: userSuccess } = userQuery();
   const { data: summaryData, isSuccess: summarySuccess } = summaryQuery();
@@ -31,7 +32,7 @@ function Dashboard() {
         <p className="text-gray-600">Let's see how you're doing</p>
       </div>
 
-      <section className="space-y-5 md:space-y-0 grid grid-cols-3 gap-5 ">
+      <section className="space-y-3 sm:space-y-5 md:space-y-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 ">
         <div className="relative overflow-hidden bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl text-white shadow-lg hover:shadow-xl transition-shadow">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-16 -mt-16" />
           <div className="flex gap-2">
@@ -73,7 +74,7 @@ function Dashboard() {
         </div>
       </section>
       <h1 className="text-xl font-semibold text-left">Your Subjects</h1>
-      <section className="space-y-5 md:space-y-0 grid grid-cols-3 gap-5 ">
+      <section className="space-y-3 sm:space-y-5 md:space-y-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 ">
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:col-span-2">
           {subjectSuccess ? (
             subjectData.data.length > 0 ? (

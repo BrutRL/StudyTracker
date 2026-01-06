@@ -23,12 +23,14 @@ export const count = async (req, res) => {
   }
 };
 export const create = async (req, res) => {
-  const { name, description } = req.body;
+  const { name, targetHours, color } = req.body;
   try {
     const newSubject = new Subject({
       userId: req.userId,
       name: name,
-      description: description,
+      targetHours: targetHours,
+      color,
+      color,
     });
     await newSubject.save();
     res.status(200).json({ ok: true, message: `Subject created successfully` });
@@ -41,7 +43,7 @@ export const create = async (req, res) => {
 
 export const update = async (req, res) => {
   const { id } = req.params;
-  const { name, description } = req.body;
+  const { name, targetHours, color } = req.body;
   try {
     await Subject.findByIdAndUpdate(
       id,
@@ -49,7 +51,8 @@ export const update = async (req, res) => {
       {
         userId: req.userId,
         name: name,
-        description: description,
+        targetHours: targetHours,
+        color: color,
       },
       {
         new: true,

@@ -17,7 +17,7 @@ function Sidebar() {
 
   return (
     <main className="relative">
-      <header className="shadow-md p-3 px-5 flex justify-between">
+      <header className="shadow-md   p-3 px-5 flex justify-between">
         <div className="flex gap-5">
           <span className="bg-gradient-to-br from-indigo-600 to-purple-600 p-3  rounded-xl">
             <FiBookOpen className="text-white  w-5 h-5 " />
