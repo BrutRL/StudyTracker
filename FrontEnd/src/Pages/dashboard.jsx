@@ -137,7 +137,7 @@ function Dashboard() {
           </div>
           <div className="bg-white p-5 shadow-md rounded-lg space-y-7">
             <p className="text-lg">Recent Activity</p>
-            {sessionCountSuccess ? (
+            {sessionLogsSuccess ? (
               sessionLogs.data.length > 0 ? (
                 sessionLogs.map((data) => (
                   <div
