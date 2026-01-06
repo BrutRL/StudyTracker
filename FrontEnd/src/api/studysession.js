@@ -50,33 +50,27 @@ export const create = async (body) => {
   return await response.json();
 };
 export const update = async (id, body) => {
-  const response = await fetch(
-    `${url}/studysession/update/${id}?_method=PATCH`,
-    {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(body),
-    }
-  );
+  const response = await fetch(`${url}/studysession/update/${id}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(body),
+  });
 
   return await response.json();
 };
 
 export const destroy = async (id) => {
-  const response = await fetch(
-    `${url}/studysession/delete/${id}?_method=DELETE`,
-    {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    }
-  );
+  const response = await fetch(`${url}/studysession/delete/${id}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
   return await response.json();
 };

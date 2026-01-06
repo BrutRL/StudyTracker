@@ -38,7 +38,7 @@ export const create = async (body) => {
   return await response.json();
 };
 export const update = async (id, body) => {
-  const response = await fetch(`${url}/subject/update/${id}?_method=PATCH`, {
+  const response = await fetch(`${url}/subject/update/${id}`, {
     method: "PUT",
     headers: {
       Accept: "application/json",
@@ -52,7 +52,7 @@ export const update = async (id, body) => {
 };
 
 export const destroy = async (id) => {
-  const response = await fetch(`${url}/subject/delete/${id}?_method=DELETE`, {
+  const response = await fetch(`${url}/subject/delete/${id}`, {
     method: "DELETE",
     headers: {
       Accept: "application/json",
