@@ -1,5 +1,5 @@
 import { StudySession } from "../Model/StudySessionSchema.js";
-
+import mongoose from "mongoose";
 export const all = async (req, res) => {
   try {
     const data = await StudySession.find({ userId: req.userId });
@@ -66,5 +66,49 @@ export const remove = async (req, res) => {
     res
       .status(401)
       .json({ ok: false, message: `Failed to update study session ${error}` });
+  }
+};
+export const summary = async (req, res) => {
+  try {
+    const now = new Date();
+    const userId = new mongoose.Types.ObjectId(req.userId);
+    const startOfToday = new Date(now.setHours(0, 0, 0, 0));
+    const startOfWeek = new Date();
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    const [result] = await StudySession.aggregate([
+      { $match: { userId: userId } },
+      {
+        $group: {
+          _id: null,
+          today: {
+            $sum: {
+              $cond: [{ $gte: ["$date", startOfToday] }, "$duration", 0],
+            },
+          },
+          thisWeek: {
+            $sum: {
+              $cond: [{ $gte: ["$date", startOfWeek] }, "$duration", 0],
+            },
+          },
+          total: { $sum: "$duration" },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      ok: true,
+      data: {
+        today: result?.today || 0,
+        thisWeek: result?.thisWeek || 0,
+        total: result?.total || 0,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      ok: false,
+      message: `Failed to get study summary ${error}`,
+    });
   }
 };
