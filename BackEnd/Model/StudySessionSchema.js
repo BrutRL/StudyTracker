@@ -6,7 +6,7 @@ const StudySessionSchema = mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: User },
   subjectId: { type: mongoose.Schema.Types.ObjectId, ref: Subject },
   duration: { type: Number, require: true },
-  notes: { type: String, minlength: 10, maxlength: 100 },
+  notes: { type: String, maxlength: 100 },
   date: { type: Date, require: true },
 });
 

@@ -2,7 +2,10 @@ import { StudySession } from "../Model/StudySessionSchema.js";
 import mongoose from "mongoose";
 export const all = async (req, res) => {
   try {
-    const data = await StudySession.find({ userId: req.userId });
+    const data = await StudySession.find({ userId: req.userId }).populate(
+      "userId",
+      "name"
+    );
     res.status(200).json({ ok: true, data: data });
   } catch (error) {
     res.status(401).json({
@@ -41,7 +44,7 @@ export const create = async (req, res) => {
       .json({ ok: true, message: `StudySession Successfully Created` });
   } catch (error) {
     res
-      .status(401)
+      .status(400)
       .json({ ok: false, message: `Failed to create study session ${error}` });
   }
 };

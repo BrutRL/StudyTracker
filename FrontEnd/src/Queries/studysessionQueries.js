@@ -1,5 +1,6 @@
-import { summary, all, count } from "../api/studysession";
-import { useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { summary, all, count, create } from "../api/studysession";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const summaryQuery = () =>
   useQuery({
@@ -18,3 +19,18 @@ export const sessionCount = () =>
     queryKey: ["sessionCount"],
     queryFn: () => count(),
   });
+
+export const createSession = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data) => create(data),
+    onSuccess: (response) => {
+      if (response.ok) {
+        toast.success(response.message);
+        queryClient.invalidateQueries(["sessionLogs"]);
+      } else {
+        toast.error(response.message);
+      }
+    },
+  });
+};
