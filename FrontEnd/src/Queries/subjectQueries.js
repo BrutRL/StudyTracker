@@ -1,4 +1,4 @@
-import { all, count, create, update, destroy } from "../api/subject";
+import { all, count, create, update, destroy, progress } from "../api/subject";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -6,6 +6,12 @@ export const subjectQuery = () =>
   useQuery({
     queryKey: ["subjectData"],
     queryFn: () => all(),
+  });
+
+export const progressQuery = () =>
+  useQuery({
+    queryKey: ["progress"],
+    queryFn: () => progress(),
   });
 
 export const subjectQueryCount = () =>

@@ -1,5 +1,5 @@
 import { userQuery } from "../Queries/userQueries";
-import { subjectQuery, subjectQueryCount } from "../Queries/subjectQueries";
+import { progressQuery, subjectQueryCount } from "../Queries/subjectQueries";
 import {
   summaryQuery,
   allSessionQuery,
@@ -15,7 +15,7 @@ import { FiTarget } from "react-icons/fi";
 function Dashboard() {
   const { data: userData, isSuccess: userSuccess } = userQuery();
   const { data: summaryData, isSuccess: summarySuccess } = summaryQuery();
-  const { data: subjectData, isSuccess: subjectSuccess } = subjectQuery();
+  const { data: progressData, isSuccess: progressSuccess } = progressQuery();
   const { data: sessionLogs, isSuccess: sessionLogsSuccess } =
     allSessionQuery();
   const { data: sessionCounts, isSuccess: sessionCountSuccess } =
@@ -74,17 +74,52 @@ function Dashboard() {
         </div>
       </section>
       <h1 className="text-xl font-semibold text-left">Your Subjects</h1>
+
       <section className="space-y-3 sm:space-y-5 md:space-y-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 ">
-        <section className="grid grid-cols-1 md: gap-4 md:col-span-2">
-          {subjectSuccess ? (
-            subjectData.data.length > 0 ? (
-              subjectData.data.map((subject) => (
+        <section className="grid grid-cols-1 md:gap-4 md:col-span-2 space-y-4 md:space-y-0">
+          <input
+            type="text"
+            placeholder="Search Subject "
+            className="p-5 h-10 rounded-lg shadow-md border-2 border-gray-200 focus:outline-none focus:border-indigo-500"
+          />
+          {progressSuccess ? (
+            progressData.data.length > 0 ? (
+              progressData.data.map((progress) => (
                 <div
-                  key={subject._id}
-                  className="p-4 bg-white rounded border rounded-xl border-gray-200 shadow hover:shadow-md transition"
+                  key={progress._id}
+                  className="p-4 bg-white rounded border rounded-xl border-gray-200 shadow hover:shadow-md transition hover:border-2  hover:border-indigo-300 md:h-30 "
                 >
-                  <p className="font-medium">{subject.name}</p>
-                  <p className="text-gray-500 text-sm">{subject.description}</p>
+                  <section className="flex justify-between">
+                    <div className="flex gap-2 ">
+                      <FiBookOpen
+                        className="h-10 w-10 text-white p-2 rounded-lg mt-1"
+                        style={{ backgroundColor: progress.color }}
+                      />
+                      <div>
+                        <p className="font-medium ">{progress.name}</p>
+                        <p>{`${formatMinutes(
+                          progress.totalHours
+                        )}/${formatMinutes(progress.targetHours)}`}</p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <p
+                        className="text-2xl font-bold md:text-3xl"
+                        style={{ color: progress.color }}
+                      >{`${progress.percent}%`}</p>
+                      <p className="text-gray-500 text-sm">Complete</p>
+                    </div>
+                  </section>
+                  <div className="w-full bg-gray-200 rounded-full h-3 mt-2">
+                    <div
+                      className="h-3 rounded-full"
+                      style={{
+                        width: `${progress.percent}%`,
+                        backgroundColor: progress.color,
+                      }}
+                    ></div>
+                  </div>
                 </div>
               ))
             ) : (

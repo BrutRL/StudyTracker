@@ -2,10 +2,9 @@ import { StudySession } from "../Model/StudySessionSchema.js";
 import mongoose from "mongoose";
 export const all = async (req, res) => {
   try {
-    const data = await StudySession.find({ userId: req.userId }).populate(
-      "userId",
-      "name"
-    );
+    const data = await StudySession.find({ userId: req.userId })
+      .populate("userId", "name")
+      .populate("subjectId", "name");
     res.status(200).json({ ok: true, data: data });
   } catch (error) {
     res.status(401).json({

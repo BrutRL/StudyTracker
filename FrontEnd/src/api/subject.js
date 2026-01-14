@@ -12,6 +12,18 @@ export const all = async () => {
   return await response.json();
 };
 
+export const progress = async () => {
+  const response = await fetch(`${url}/subject/progress`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  return await response.json();
+};
+
 export const count = async () => {
   const response = await fetch(`${url}/subject/count`, {
     method: "GET",

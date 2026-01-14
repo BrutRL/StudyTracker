@@ -6,3 +6,13 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+/* Chrome, Safari, Edge */
+input[type="range"]::-webkit-slider-thumb {
+  @apply appearance-none w-0 h-0 bg-transparent;
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-thumb {
+  @apply w-0 h-0 bg-transparent;
+}
