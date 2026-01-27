@@ -11,6 +11,7 @@ import { formatMinutes } from "../utils/hoursFormatter";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FiBookOpen } from "react-icons/fi";
 import { FiTarget } from "react-icons/fi";
+import { useState } from "react";
 
 function Dashboard() {
   const { data: userData, isSuccess: userSuccess } = userQuery();
@@ -22,6 +23,13 @@ function Dashboard() {
     sessionCount();
   const { data: subjectCount, isSuccess: subjectCountSuccess } =
     subjectQueryCount();
+
+  const [search, setSearch] = useState("");
+
+  const filteredProgress =
+    progressData?.data?.filter((item) =>
+      item.name.toLowerCase().includes(search.toLowerCase()),
+    ) || [];
 
   return (
     <main className="space-y-3">
@@ -80,11 +88,12 @@ function Dashboard() {
           <input
             type="text"
             placeholder="Search Subject "
+            onChange={(e) => setSearch(e.target.value)}
             className="p-5 h-10 rounded-lg shadow-md border-2 border-gray-200 focus:outline-none focus:border-indigo-500"
           />
           {progressSuccess ? (
-            progressData.data.length > 0 ? (
-              progressData.data.map((progress) => (
+            filteredProgress.length > 0 ? (
+              filteredProgress.map((progress) => (
                 <div
                   key={progress._id}
                   className="p-4 bg-white rounded border rounded-xl border-gray-200 shadow hover:shadow-md transition hover:border-2  hover:border-indigo-300 md:h-30 "
@@ -98,7 +107,7 @@ function Dashboard() {
                       <div>
                         <p className="font-medium ">{progress.name}</p>
                         <p>{`${formatMinutes(
-                          progress.totalHours
+                          progress.totalHours,
                         )}/${formatMinutes(progress.targetHours)}`}</p>
                       </div>
                     </div>

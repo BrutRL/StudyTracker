@@ -4,13 +4,21 @@ import {
   sessionCount,
   createSession,
   allSessionQuery,
+  deleteSession,
+  updateSession,
 } from "../Queries/studysessionQueries";
 import { subjectQuery } from "../Queries/subjectQueries";
 import { useCallback, useState } from "react";
 import { formatMinutes } from "../utils/hoursFormatter";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { FaRegEdit } from "react-icons/fa";
+import { toast } from "sonner";
 function StudySession() {
   const quickDurations = [25, 45, 60, 90];
+  const [showUpdate, setShowUpdate] = useState(false);
   const create = createSession();
+  const destroy = deleteSession();
+  const update = updateSession();
   const { data: subjectData, isSuccess: subjectSuccess } = subjectQuery();
   const { data: studyCount, isSuccess: countSucess } = sessionCount();
   const { data: allSessions, isSuccess: sessionsSuccess } = allSessionQuery();
@@ -24,7 +32,7 @@ function StudySession() {
     (e) => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     },
-    [formData]
+    [formData],
   );
   const createSubmit = useCallback(
     (e) => {
@@ -39,10 +47,21 @@ function StudySession() {
         });
       }, 2000);
     },
-    [formData]
+    [formData],
   );
+
+  const updateSubmit = useCallback(
+    (e, id, data) => {
+      e.preventDefault();
+      update.mutate(id, data);
+    },
+    [formData],
+  );
+  const handleDelete = (id) => {
+    destroy.mutate(id);
+  };
   return (
-    <main className="space-y-5 ">
+    <main className="space-y-5 relative ">
       <div>
         <h1 className="font-semibold text-2xl">Log Study Session</h1>
         <p className="text-gray-500">
@@ -202,7 +221,7 @@ function StudySession() {
                 allSessions.data.map((data) => (
                   <div
                     key={data._id}
-                    className="bg-gray-100 shadow-md rounded-xl border border-gray-300 p-5 mt-5"
+                    className="bg-gray-100 shadow-md rounded-xl border border-gray-300 p-5 mt-5 flex justify-between"
                   >
                     <div className="flex gap-4">
                       <GoClock className="bg-[#10B981] text-white h-10 w-10 p-2 rounded-xl mt-1" />
@@ -220,10 +239,20 @@ function StudySession() {
                       </div>
                     </div>
 
-                    <div>
-                      <p className="bg-[#10B981] text-white rounded-xl p-2">
+                    <div className="flex gap-3">
+                      <button className="bg-[#10B981] text-white rounded-xl p-2">
                         {formatMinutes(data.duration)}
-                      </p>
+                      </button>
+                      <FaRegEdit
+                        className="text-indigo-500 w-6 h-6 mt-3"
+                        onClick={() => {
+                          (setShowUpdate(true), setFormData(data));
+                        }}
+                      />
+                      <RiDeleteBin6Line
+                        className="text-red-500 w-6 h-6 mt-3"
+                        onClick={() => handleDelete(data._id)}
+                      />
                     </div>
                   </div>
                 ))
